@@ -61,31 +61,35 @@ class pattern {
   }
 
   public static void main(String[] args) {
-    System.out.println("1.Right Asc Tiangle");
-    System.out.println("2.left Asc Triangle");
-    System.out.println("3.Left Asc Triangle");
-    System.out.println("4.Right Asc Triangle");
-    System.out.println("5.Central Diamond");
-    Scanner scan = new Scanner(System.in);
-    int choice = scan.nextInt();
-    switch (choice) {
+    boolean cont = true;
+    while(cont){
+      System.out.println("1.Right Asc Tiangle");
+      System.out.println("2.left Asc Triangle");
+      System.out.println("3.Left Asc Triangle");
+      System.out.println("4.Right Asc Triangle");
+      System.out.println("5.Central Diamond");
+      Scanner scan = new Scanner(System.in);
+      int choice = scan.nextInt();
+      switch (choice) {
 
-      case 1:
-        rightAscTriangle(5);
-        break;
-      case 2:
-        leftAscTriangle(5);
-        break;
-      case 3:
-        leftAscTriangle(5);
-        break;
-      case 4:
-        rightAscTriangle(5);
-        break;
-      case 5:
-        centralDiamond(6);
-        break;
-
+        case 1:
+          rightAscTriangle(5);
+          break;
+        case 2:
+          leftAscTriangle(5);
+          break;
+        case 3:
+          leftAscTriangle(5);
+          break;
+        case 4:
+          rightAscTriangle(5);
+          break;
+        case 5:
+          centralDiamond(6);
+          break;
+        default:
+          cont = false;
+      }
     }
   }
 }
