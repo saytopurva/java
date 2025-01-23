@@ -1,0 +1,27 @@
+import java.util.*;
+public class main{
+    public staticvoid main (String[]args){
+        Scanner scan = new Scanner (System.in);
+    int n= scan.nextInt();
+int mat[][]=next int [n][n];
+int top=0;left=0,right=n-1,bottom=n-1,it=1;{
+while(left<=right||top<=bottom)
+mat[top][i]=it++;
+top++;
+for(int i=top;i<=bottom;i++)
+mat[i][right]=it++; 
+right--;
+for(int i=right;i>=left;i--)
+mat[bottom][i]=it++;
+bottom--;
+for(int i=bottom;i>=top;i--)
+mat[i][left]=it++;
+left++;
+ }
+ for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++)
+    System.out.print(mat[i][j]+" ");
+    System.out.println();
+ }
+}
+}
