@@ -74,7 +74,6 @@ public class StudentInfoApp {
             student.displayDetails();
         }
 
-        scanner.close();
     }
 }
 
