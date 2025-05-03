@@ -1,0 +1,176 @@
+https://chatgpt.com/share/68154905-5728-8012-be14-460900364bd7
+
+Excellent approach, Shivam—you want brief, similar-style solutions you can memorize.
+Here’s a concise set of smart contracts for all 12 questions, in the same format.
+
+✅ 1. Owner + userValues mapping
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract1 {
+    address public owner;
+    mapping(address => uint) public userValues;
+    constructor() { owner = msg.sender; }
+    modifier onlyOwner() { require(msg.sender == owner); _; }
+    function setUserValue(address user, uint val) public onlyOwner { userValues[user] = val; }
+    function getUserValue(address user) public view returns (uint) { return userValues[user]; }
+    function square(uint x) public pure returns (uint) { return x * x; }
+}
+✅ 2. Balance + userBalances (add ether)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract2 {
+    uint public balance;
+    mapping(address => uint) public userBalances;
+    constructor(uint _balance) { balance = _balance; }
+    modifier onlySpecific(address addr) { require(msg.sender == addr); _; }
+    function addBalance(address user) public payable onlySpecific(owner) { userBalances[user] += msg.value; }
+    function getUserBalance(address user) public view returns (uint) { return userBalances[user]; }
+    function etherToWei(uint eth) public pure returns (uint) { return eth * 1 ether; }
+    address owner = 0x123...; // Replace with specific address
+}
+✅ 3. Name + userNames (length >3 check)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract3 {
+    string public name;
+    mapping(address => string) public userNames;
+    constructor(string memory _name) { name = _name; }
+    modifier nameLong(string memory newName) { require(bytes(newName).length > 3); _; }
+    function updateUserName(address user, string memory newName) public nameLong(newName) { userNames[user] = newName; }
+    function getUserName(address user) public view returns (string memory) { return userNames[user]; }
+    function concat(string memory a, string memory b) public pure returns (string memory) { return string(abi.encodePacked(a,b)); }
+}
+✅ 4. Counter + userCounters (msg.value ≥ 1 ether)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract4 {
+    uint public counter;
+    mapping(address => uint) public userCounters;
+    constructor(uint _counter) { counter = _counter; }
+    modifier paidEnough() { require(msg.value >= 1 ether); _; }
+    function incrementUserCounter() public payable paidEnough { userCounters[msg.sender]++; }
+    function getUserCounter(address user) public view returns (uint) { return userCounters[user]; }
+    function isEven(uint x) public pure returns (bool) { return x % 2 == 0; }
+}
+✅ 5. isActive + userStatus (timestamp check)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract5 {
+    bool public isActive;
+    mapping(address => bool) public userStatus;
+    constructor() { isActive = true; }
+    modifier afterTime(uint time) { require(block.timestamp > time); _; }
+    function toggleUserStatus(address user) public afterTime(172800) { userStatus[user] = !userStatus[user]; }
+    function getUserStatus(address user) public view returns (bool) { return userStatus[user]; }
+    function negate(bool b) public pure returns (bool) { return !b; }
+}
+✅ 6. Price + userPrices (non-zero price check)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract6 {
+    uint public price;
+    mapping(address => uint) public userPrices;
+    constructor(uint _price) { price = _price; }
+    modifier validPrice(uint p) { require(p > 0); _; }
+    function setUserPrice(address user, uint p) public validPrice(p) { userPrices[user] = p; }
+    function getUserPriceInEther(address user) public view returns (uint) { return userPrices[user] / 1 ether; }
+    function multiply(uint a, uint b) public pure returns (uint) { return a * b; }
+}
+✅ 7. totalSupply + userSupplies (only owner)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract7 {
+    uint public totalSupply;
+    address public owner;
+    mapping(address => uint) public userSupplies;
+    constructor(uint _supply) { totalSupply = _supply; owner = msg.sender; }
+    modifier onlyOwner() { require(msg.sender == owner); _; }
+    function increaseUserSupply(address user, uint amt) public onlyOwner { userSupplies[user] += amt; }
+    function getUserSupply(address user) public view returns (uint) { return userSupplies[user]; }
+    function half(uint x) public pure returns (uint) { return x / 2; }
+}
+✅ 8. userCount + userRegistrations (msg.value == 0.5 ether)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract8 {
+    uint public userCount;
+    mapping(address => bool) public userRegistrations;
+    constructor() { userCount = 0; }
+    modifier fee() { require(msg.value == 0.5 ether); _; }
+    function registerUser() public payable fee { userRegistrations[msg.sender] = true; userCount++; }
+    function isRegistered(address user) public view returns (bool) { return userRegistrations[user]; }
+    function isPositive(int x) public pure returns (bool) { return x > 0; }
+}
+✅ 9. message + userMessages (non-empty message)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract9 {
+    string public message;
+    mapping(address => string) public userMessages;
+    constructor(string memory _msg) { message = _msg; }
+    modifier notEmpty(string memory newMsg) { require(bytes(newMsg).length > 0); _; }
+    function updateUserMessage(address user, string memory newMsg) public notEmpty(newMsg) { userMessages[user] = newMsg; }
+    function getUserMessage(address user) public view returns (string memory) { return userMessages[user]; }
+    function strLength(string memory str) public pure returns (uint) { return bytes(str).length; }
+}
+✅ 10. locked + userLocks (not already locked)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract10 {
+    bool public locked;
+    mapping(address => bool) public userLocks;
+    constructor() { locked = false; }
+    modifier notLocked(address user) { require(!userLocks[user]); _; }
+    function lockUser(address user) public notLocked(user) { userLocks[user] = true; }
+    function isUserLocked(address user) public view returns (bool) { return userLocks[user]; }
+    function bitAnd(uint a, uint b) public pure returns (uint) { return a & b; }
+}
+✅ 11. funds + userFunds (msg.value >= 1 ether)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract11 {
+    uint public funds;
+    mapping(address => uint) public userFunds;
+    constructor(uint _funds) { funds = _funds; }
+    modifier minDeposit() { require(msg.value >= 1 ether); _; }
+    function addUserFunds(address user) public payable minDeposit { userFunds[user] += msg.value; }
+    function getUserFundsInEther(address user) public view returns (uint) { return userFunds[user] / 1 ether; }
+    function max(uint a, uint b) public pure returns (uint) { return a > b ? a : b; }
+}
+✅ 12. ownerName + userOwnerNames (only original owner)
+solidity
+Copy
+Edit
+pragma solidity ^0.8.0;
+contract Contract12 {
+    string public ownerName;
+    address public owner;
+    mapping(address => string) public userOwnerNames;
+    constructor(string memory _name) { ownerName = _name; owner = msg.sender; }
+    modifier onlyOwner() { require(msg.sender == owner); _; }
+    function changeUserOwner(address user, string memory newOwnerName) public onlyOwner { userOwnerNames[user] = newOwnerName; }
+    function getUserOwnerName(address user) public view returns (string memory) { return userOwnerNames[user]; }
+    function checkLength(string memory s) public pure returns (bool) { return bytes(s).length > 0; }
+}
